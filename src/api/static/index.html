@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Infra Chatbot</title>
+    <style>body { font-family: Arial; max-width: 800px; margin: 20px auto; }</style>
+</head>
+<body>
+    <h1>AI Infrastructure Chatbot 🧠</h1>
+    <p>Describe your AWS infra in plain English:</p>
+    
+    <textarea id="query" rows="3" cols="80" placeholder="e.g., Create an S3 bucket with versioning"></textarea><br><br>
+    <button onclick="generate()">Generate Terraform</button>
+    
+    <h3>Terraform Code:</h3>
+    <pre id="tf-code" style="background:#f0f0f0; padding:10px;"></pre>
+    
+    <h3>Plan Output:</h3>
+    <pre id="plan-output" style="background:#222; color:#0f0; padding:10px; white-space: pre-wrap;"></pre>
+
+    <script>
+        async function generate() {
+            const query = document.getElementById("query").value;
+            const res = await fetch("/generate", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({query})
+            });
+            const data = await res.json();
+            document.getElementById("tf-code").textContent = data.terraform_code;
+            document.getElementById("plan-output").textContent = data.plan_output;
+        }
+    </script>
+</body>
+</html>
