@@ -18,3 +18,6 @@ pip install -r requirements.txt
 
 # 2. Run
 python src/main.py
+
+# 3. Run in web UI
+uvicorn src.api.app:app --host 0.0.0.0 --port 8000 --reload
